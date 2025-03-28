@@ -1,0 +1,70 @@
+package com.example.communication
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+
+@Composable
+fun ContactUsScreen(onBackClick: () -> Unit) {
+    var name by remember { mutableStateOf(TextFieldValue("")) }
+    var email by remember { mutableStateOf(TextFieldValue("")) }
+    var message by remember { mutableStateOf(TextFieldValue("")) }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFFC084BF)) // Purple background
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Spacer(modifier = Modifier.height(24.dp))
+
+        // Title
+        Button(
+            onClick = {},
+            shape = RoundedCornerShape(20.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE1BEE7)),
+            modifier = Modifier.fillMaxWidth(0.8f)
+        ) {
+            Text(text = "Contact us", fontSize = 18.sp, color = Color.Black)
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        val fields = listOf("Name" to name, "E Mail" to email)
+        fields.forEach { (label, value) ->
+            OutlinedTextField(
+                value = value,
+                onValueChange = { if (label == "Name") name = it else email = it },
+                label = { Text(label) },
+                modifier = Modifier
+                    .fillMaxWidth(0.8f)
+                    .padding(vertical = 4.dp)
+            )
+        }
+
+        OutlinedTextField(
+            value = message,
+            onValueChange = { message = it },
+            label = { Text("Message") },
+            modifier = Modifier
+                .fillMaxWidth(0.8f)
+                .height(150.dp)
+                .padding(vertical = 4.dp)
+        )
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        // Back Button
+        TextButton(onClick = { onBackClick() }) {
+            Text(text = "←", fontSize = 24.sp, color = Color.Black)
+        }
+    }
+}
