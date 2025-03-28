@@ -1,0 +1,145 @@
+package com.example.communication
+import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+
+@Composable
+fun RegisterScreen(
+    onRegisterClick: () -> Unit,
+    onLoginClick: () -> Unit
+) {
+    var username by remember { mutableStateOf("") }
+    var emailOrPhone by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFFE1BEE7)) // Light Purple background
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Spacer(modifier = Modifier.height(24.dp))
+
+        // Logo
+        Box(
+            modifier = Modifier
+                .size(120.dp)
+                .background(Color.White, shape = RoundedCornerShape(8.dp)),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.logo), // Replace with actual logo
+                contentDescription = "App Logo"
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Welcome Text
+        Text(
+            text = "Welcome to",
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Normal,
+            color = Color.White
+        )
+        Text(
+            text = "TALK AMAZE",
+            fontSize = 22.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.White
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(
+            text = "create account",
+            fontSize = 14.sp,
+            color = Color.White
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Input Fields
+        OutlinedTextField(
+            value = username,
+            onValueChange = { username = it },
+            label = { Text("Username") },
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(8.dp)
+        )
+
+        OutlinedTextField(
+            value = emailOrPhone,
+            onValueChange = { emailOrPhone = it },
+            label = { Text("E Mail or Mobile") },
+            modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+            shape = RoundedCornerShape(8.dp)
+        )
+
+        OutlinedTextField(
+            value = password,
+            onValueChange = { password = it },
+            label = { Text("Set Password") },
+            modifier = Modifier.fillMaxWidth(),
+            visualTransformation = PasswordVisualTransformation(),
+            shape = RoundedCornerShape(8.dp)
+        )
+
+        OutlinedTextField(
+            value = confirmPassword,
+            onValueChange = { confirmPassword = it },
+            label = { Text("Confirm Password") },
+            modifier = Modifier.fillMaxWidth(),
+            visualTransformation = PasswordVisualTransformation(),
+            shape = RoundedCornerShape(8.dp)
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Register Button
+        Button(
+            onClick = { onRegisterClick() },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7B1FA2))
+        ) {
+            Text(text = "Register", fontSize = 16.sp)
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Already have an account?
+        Text(
+            text = "Already have an account?",
+            fontSize = 14.sp,
+            color = Color.White
+        )
+
+        TextButton(
+            onClick = { onLoginClick() }
+        ) {
+            Text(
+                text = "Login",
+                fontSize = 16.sp,
+                color = Color.White
+            )
+        }
+    }
+}
