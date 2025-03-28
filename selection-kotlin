@@ -1,0 +1,111 @@
+package com.example.communication
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+
+@Composable
+fun LearningDashboard() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFFC084BF)) // Background color
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        DashboardTopBar()  // ✅ Renamed TopBar to DashboardTopBar
+        Spacer(modifier = Modifier.height(16.dp))
+        DashboardOptionsGrid()  // ✅ Renamed LearningOptionsGrid to DashboardOptionsGrid
+    }
+}
+
+// 🔝 Fixed Top Bar Function Name
+@Composable
+fun DashboardTopBar() {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(painter = painterResource(id = R.drawable.profile), contentDescription = "Profile")
+        SearchBar()
+        Icon(painter = painterResource(id = R.drawable.notifications), contentDescription = "Notifications")
+    }
+}
+
+// 🔍 Search Bar
+@Composable
+fun SearchBar() {
+    OutlinedTextField(
+        value = "",
+        onValueChange = {},
+        placeholder = { Text("Hinted search text") },
+        shape = RoundedCornerShape(8.dp),
+        modifier = Modifier.fillMaxWidth(0.8f)
+    )
+}
+
+// 🔲 Learning Options Grid (Renamed to DashboardOptionsGrid)
+@Composable
+fun DashboardOptionsGrid() {
+    val options = listOf(
+        "Grammar" to R.drawable.grammar,
+        "Vocabulary" to R.drawable.vocabulary,
+        "Voice chat" to R.drawable.voicechat,
+        "Text message" to R.drawable.text,
+        "Listening" to R.drawable.listening,
+        "Speaking practice" to R.drawable.speaking,
+        "Reading" to R.drawable.reading,
+        "Writing" to R.drawable.writing
+    )
+
+    Column {
+        for (row in options.chunked(2)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                for ((label, icon) in row) {
+                    LearningOption(label, icon)
+                }
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+    }
+}
+
+// 📌 Learning Option Item
+@Composable
+fun LearningOption(label: String, iconRes: Int) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.clickable { /* Handle click */ }
+    ) {
+        Image(
+            painter = painterResource(id = iconRes),
+            contentDescription = label,
+            modifier = Modifier.size(70.dp)
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            text = label,
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.White,
+            modifier = Modifier
+                .background(Color(0xFF8A4DBF), shape = RoundedCornerShape(4.dp))
+                .padding(4.dp)
+        )
+    }
+}
